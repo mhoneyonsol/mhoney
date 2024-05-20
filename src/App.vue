@@ -138,6 +138,12 @@ initWallet({ wallets, autoConnect: true })
   --tw-content: '';
 }
 
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
 /*
 1. Use a consistent sensible line-height in all browsers.
 2. Prevent adjustments of font size after orientation changes in iOS.
