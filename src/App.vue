@@ -33,7 +33,7 @@ initWallet({ wallets, autoConnect: true })
 </div>
       <div class="mt-10">
         <h1
-          class="text-5xl font-sans text-slate-800 font-bold text-center  text-transparent bg-clip-text bg-gradient-to-l from-[#7928ca] to-[#ff0080]">
+          class="tt text-5xl font-sans text-slate-800 font-bold text-center  text-transparent bg-clip-text bg-gradient-to-l from-[#7928ca] to-[#ff0080]">
           $MHONEY CREATOR</h1>
       
         <h3 class="text-center">
@@ -139,8 +139,8 @@ initWallet({ wallets, autoConnect: true })
 }
 
 @media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
+  .tt {
+    font-size:3em!important;
   }
 }
 
