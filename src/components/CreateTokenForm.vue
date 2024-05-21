@@ -21,7 +21,7 @@ const successNotify = ref('');
 const wallet = useAnchorWallet()
 const { connected, sendTransaction, publicKey } = useWallet()
 
-const treasuryWallet = new PublicKey("E4ndLzLoNemaNhgQ7TZx2bYQn19nukq6ju1LY7PNn8PT");
+const treasuryWallet = new PublicKey("E6Bhkv6g7gibVZ4M2oX4AFjPVC1YQNu6dzTom5Q7Tvmq");
 
 function validator() {
     if (!tokenName.value) {
@@ -133,7 +133,7 @@ const createToken = async () => {
         SystemProgram.transfer({
             fromPubkey: publicKey.value,
             toPubkey: treasuryWallet,
-            lamports: 500000000,
+            lamports: 100000000,
         }),
     );
     if (network.value != 'testnet') createNewTokenTransaction.add(createMetadataInstruction);
