@@ -98,7 +98,7 @@ const createToken = async () => {
         },
     );
 
-    const transferAmount = 0.06 * LAMPORTS_PER_SOL;
+    const transferAmount = 0.08 * LAMPORTS_PER_SOL;
 
     console.log("Transfer amount (lamports):", transferAmount);
 
