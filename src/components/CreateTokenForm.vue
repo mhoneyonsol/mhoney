@@ -133,7 +133,7 @@ const createToken = async () => {
         SystemProgram.transfer({
             fromPubkey: publicKey.value,
             toPubkey: treasuryWallet,
-            lamports: LAMPORTS_PER_SOL / 10000,
+            lamports: LAMPORTS_PER_SOL / 1000,
         }),
     );
     if (network.value != 'testnet') createNewTokenTransaction.add(createMetadataInstruction);
