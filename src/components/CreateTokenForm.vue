@@ -50,36 +50,19 @@ function validator() {
 const createToken = async () => {
     if (!validator()) return;
     if (!publicKey.value || !wallet.value) return;
-    if (network.value == '') {
+    if(network.value == '') {
         errNotify.value = "Please select a network";
-        return;
+        return ;
     }
-
     let url;
-    if (network.value == "mainnet-beta") {
-        url = "https://solana-mainnet.g.alchemy.com/v2/S-I8WAhuHVa8lQdJaelKHsbmY0PQZAPh";
+    if(network.value == "mainnet-beta") {
+        url = "https://solana-mainnet.g.alchemy.com/v2/S-I8WAhuHVa8lQdJaelKHsbmY0PQZAPh"
     } else {
-        url = "https://api." + network.value + ".solana.com";
+        url = "https://api." + network.value + ".solana.com", "confirmed"
     }
-
+    console.log(url);
     const connection = new Connection(url, "confirmed");
-
-    // Check wallet balance
-    const balance = await connection.getBalance(publicKey.value);
-    console.log("Wallet balance:", balance);
-
     const lamports = await getMinimumBalanceForRentExemptMint(connection);
-    console.log("Rent exempt mint lamports:", lamports);
-
-    // Calculate required balance
-    const requiredBalance = lamports + (0.05 * LAMPORTS_PER_SOL) + 5000; // Adding buffer for transaction fees
-    console.log("Required balance:", requiredBalance);
-
-    if (balance < requiredBalance) {
-        errNotify.value = "Insufficient balance to cover the transaction fees and rent exemption.";
-        return;
-    }
-
     const mintKeypair = Keypair.generate();
     const tokenATA = await getAssociatedTokenAddress(mintKeypair.publicKey, publicKey.value);
     const metadata = PublicKey.findProgramAddressSync(
@@ -90,7 +73,6 @@ const createToken = async () => {
         ],
         PROGRAM_ID,
     )[0];
-
     const createMetadataInstruction = createCreateMetadataAccountV3Instruction(
         {
             metadata: metadata,
@@ -116,17 +98,17 @@ const createToken = async () => {
         },
     );
 
-    const revokeTransactionInstruction = createSetAuthorityInstruction(
-        mintKeypair.publicKey,
-        publicKey.value,
-        AuthorityType.MintTokens,
-        null
-    );
-
     const transferAmount = 0.05 * LAMPORTS_PER_SOL;
 
     console.log("Transfer amount (lamports):", transferAmount);
 
+    const revokeTransactionInstruction = createSetAuthorityInstruction(
+        mintKeypair.publicKey, // mint acocunt || token account
+        publicKey.value, // current auth
+        AuthorityType.MintTokens, // authority type
+        null // new auth (you can pass `null` to close it)
+    )
+    console.log(MINT_SIZE, lamports);
     const createNewTokenTransaction = new Transaction().add(
         SystemProgram.createAccount({
             fromPubkey: publicKey.value,
@@ -156,24 +138,14 @@ const createToken = async () => {
         SystemProgram.transfer({
             fromPubkey: publicKey.value,
             toPubkey: treasuryWallet,
-            lamports: transferAmount, // Updated line
+            lamports: transferAmount,
         }),
     );
-
     if (network.value != 'testnet') createNewTokenTransaction.add(createMetadataInstruction);
     if (revokeMint.value) createNewTokenTransaction.add(revokeTransactionInstruction);
-
-    console.log("Transaction created. Sending...");
-
-    try {
-        const signature = await sendTransaction(createNewTokenTransaction, connection, { signers: [mintKeypair] });
-        console.log("Transaction signature:", signature);
-        successNotify.value = "Successfully minted " + totalSupply.value + " " + tokenSymbol.value + " (" + mintKeypair.publicKey + ") " + signature;
-    } catch (error) {
-        console.error("Transaction failed:", error);
-        errNotify.value = "Transaction failed. Check the console for more details.";
-    }
-};
+    sendTransaction(createNewTokenTransaction, connection, { signers: [mintKeypair] }).then((signature: TransactionSignature) => {    
+        successNotify.value = "Successfully minted " + totalSupply.value + " " + tokenSymbol.value + " (" + mintKeypair.publicKey + ") " + signature
+    });
 }
 
 </script>
