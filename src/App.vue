@@ -106,6 +106,20 @@ html {
     font-size: 32px;
     text-align: center;
 }
+
+
+
+36.lg\:flex-row.flex-col.justify-center.items-center.h-screen.relative:hover {
+    transform: scale3d(1.2, 1.2, 1.2);
+    transition: 2s;
+}
+
+36.lg\:flex-row.flex-col.justify-center.items-center.h-screen.relative {
+    transition: 2s;
+}
+
+
+
 .accordion-item {
     margin-top: 16px;
     border: 1px solid #fcfcfc;
