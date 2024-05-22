@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import CreateTokenForm from "./components/CreateTokenForm.vue";
+import Chatbot from './components/chatbot.vue';
 import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adapter-wallets'
 import { initWallet, WalletMultiButton } from 'solana-wallets-vue'
 import "solana-wallets-vue/styles.css";
+
+export default {
+  components: {
+    Chatbot
+  }
+};
+
 const wallets = [
   new PhantomWalletAdapter(),
   new SolflareWalletAdapter(),
@@ -85,7 +93,15 @@ initWallet({ wallets, autoConnect: true })
 
 </div>
 <br>
+  <Chatbot />
 </template>
+
+
+
+
+
+    
+ 
 
 
 
