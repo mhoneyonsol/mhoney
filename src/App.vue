@@ -100,7 +100,7 @@ initWallet({ wallets, autoConnect: true })
 </template>
 
 <script>
-import Chatbot from './components/Chatbot.vue';
+import Chatbot from './components/chatbot.vue';
 
 export default {
   components: {
