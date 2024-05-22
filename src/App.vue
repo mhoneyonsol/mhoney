@@ -84,7 +84,7 @@ initWallet({ wallets, autoConnect: true })
     </div>
 
 </div>
-
+<br>
 </template>
 
 
