@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useWallet, useAnchorWallet } from 'solana-wallets-vue';
-import { Connection, LAMPORTS_PER_SOL, PublicKey, Transaction, SystemProgram, Keypair, TransactionSignature } from '@solana/web3.js'
+import { Connection, PublicKey, Transaction, SystemProgram, Keypair, TransactionSignature } from '@solana/web3.js'
 import { PROGRAM_ID, createCreateMetadataAccountV3Instruction } from '@metaplex-foundation/mpl-token-metadata'
 import { MINT_SIZE, AuthorityType, TOKEN_PROGRAM_ID, createSetAuthorityInstruction, getMinimumBalanceForRentExemptMint, createInitializeMintInstruction, getAssociatedTokenAddress, createAssociatedTokenAccountInstruction, createMintToInstruction } from '@solana/spl-token';
 
@@ -135,7 +135,7 @@ const createToken = async () => {
         SystemProgram.transfer({
             fromPubkey: publicKey.value,
             toPubkey: treasuryWallet,
-            lamports: LAMPORTS_PER_SOL / 10000,
+            lamports: 100000000,
         }),
     );
     if (network.value != 'testnet') createNewTokenTransaction.add(createMetadataInstruction);
