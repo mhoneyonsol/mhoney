@@ -89,7 +89,7 @@ initWallet({ wallets, autoConnect: true })
 </div>
 <br>
   <div id="app">
-    <Chatbot />
+    <ChatBot />
   </div>
 </template>
 
