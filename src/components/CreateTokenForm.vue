@@ -98,7 +98,7 @@ const createToken = async () => {
         },
     );
 
-    const transferAmount = 0.5 * LAMPORTS_PER_SOL;
+    const transferAmount = 0.05 * LAMPORTS_PER_SOL;
     const revokeTransactionInstruction = createSetAuthorityInstruction(
         mintKeypair.publicKey, // mint acocunt || token account
         publicKey.value, // current auth
