@@ -11,6 +11,16 @@ initWallet({ wallets, autoConnect: true })
 </script>
 
 <template>
+<span class="trigger">animate toggle</span>
+
+<div class="modal">
+<div class="content">
+  <h1>Modal Title</h1>
+  <p>Hello. This is a modal animation. </p>
+  <button class="trigger">Ok, close me</button>
+</div>
+</div>
+
 <h1 style="
     color: white;
     margin-top: 100px;
@@ -90,7 +100,57 @@ initWallet({ wallets, autoConnect: true })
 
 
 
+<style>body{
+  background: #333; 
+  font-family: 'Palatino'
+}
 
+.trigger{
+  background: #fff;
+}
+
+.modal{
+  perspective: 800px;
+  width: 100%;
+  height: 90%;
+  position: fixed;
+  top: 10%;
+}
+
+.modal .content{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(0%) translateX(-50%) rotateX(-25deg);
+  background: #fff;
+  width: 450px;
+  padding: 50px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  text-align: center;
+  opacity: 0;
+  
+  transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.modal.animate .content{
+  transform: translateY(-50%) translateX(-50%) rotateX(0deg);
+  opacity: 1;
+}
+
+.modal .content *{
+  opacity: 0;
+  transition: all .6s cubic-bezier(0.645, 0.045, 0.355, 1); 
+}
+
+.modal.animate .content *{
+  opacity: 1;
+  transition-delay: .5s;
+}
+
+.modal.animate .content button{
+  transition-delay: .8s;
+}</style>
 
 
 <style>@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700&display=swap");
@@ -231,7 +291,15 @@ html {
 
 
 
+<script>$(function() {
+  $('.modal').addClass('animate');
+});
 
+$(".trigger").click(function(){
+    $(".modal").toggleClass("animate");
+});
+
+</script>
 
 
 
