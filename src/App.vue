@@ -8,6 +8,14 @@ const wallets = [
   new SolflareWalletAdapter(),
 ]
 initWallet({ wallets, autoConnect: true })
+
+import Chatbot from './components/Chatbot.vue';
+
+export default {
+  components: {
+    Chatbot
+  }
+};
 </script>
 
 <template>
@@ -93,15 +101,9 @@ initWallet({ wallets, autoConnect: true })
 
 
 
-<script>
-import Chatbot from './components/Chatbot.vue';
 
-export default {
-  components: {
-    Chatbot
-  }
-};
-</script>
+
+
 
 
 
