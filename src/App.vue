@@ -9,16 +9,7 @@ const wallets = [
 ]
 initWallet({ wallets, autoConnect: true })
 </script>
-<script>document.addEventListener('contextmenu', event => event.preventDefault());
 
-$("buutton").click(function () {
-  $(".pop-up").addClass("open");
-});
-
-$(".pop-up .close").click(function () {
-  $(".pop-up").removeClass("open");
-});
-</script>
 
 <template>
 <h1 style="
