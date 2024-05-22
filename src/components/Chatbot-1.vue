@@ -1,56 +1,60 @@
 <template>
-  <div class="chatbot">
-    <div class="messages">
-      <div v-for="(message, index) in messages" :key="index" class="message">
-        <strong>{{ message.user ? 'You' : 'Bot' }}:</strong> {{ message.text }}
-      </div>
-    </div>
-    <input v-model="input" @keyup.enter="sendMessage" placeholder="Type your message" />
+  <div>
+    <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Type your message" />
     <button @click="sendMessage">Send</button>
+    <div v-if="response">{{ response }}</div>
+    <div v-if="error">{{ error }}</div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axiosInstance from './axiosInstance';
 
 export default {
   data() {
     return {
-      messages: [],
-      input: ''
+      userInput: '',
+      response: '',
+      error: ''
     };
   },
   methods: {
     async sendMessage() {
-      const userMessage = this.input;
-      if (userMessage.trim() === '') return;
-
-      this.messages.push({ user: true, text: userMessage });
-      this.input = '';
-
       try {
-        const response = await axios.post('https://api.openai.com/v1/engines/davinci-codex/completions', {
-          prompt: `User: ${userMessage}\nBot:`,
+        const res = await axiosInstance.post('/completions', {
+          model: 'text-davinci-003', // Ensure the model is specified
+          prompt: this.userInput,
           max_tokens: 150,
           n: 1,
-          stop: ["\n"],
-        }, {
-          headers: {
-            'Authorization': `Bearer YOUR_OPENAI_API_KEY`,
-            'Content-Type': 'application/json'
-          }
+          stop: null,
+          temperature: 0.7,
         });
-
-        const botMessage = response.data.choices[0].text.trim();
-        this.messages.push({ user: false, text: botMessage });
+        this.response = res.data.choices[0].text;
+        this.error = ''; // Clear any previous errors
       } catch (error) {
-        console.error('Error communicating with the API', error);
-        this.messages.push({ user: false, text: 'Sorry, I am having trouble responding right now.' });
+        console.error('Error making API request:', error);
+        if (error.response) {
+          // The request was made and the server responded with a status code that falls out of the range of 2xx
+          console.error('Response data:', error.response.data);
+          console.error('Response status:', error.response.status);
+          console.error('Response headers:', error.response.headers);
+          this.error = `Error: ${error.response.data.error.message}`;
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error('Request data:', error.request);
+          this.error = 'Error communicating with the API: No response received';
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error('Error message:', error.message);
+          this.error = `Error: ${error.message}`;
+        }
+        this.response = ''; // Clear any previous response
       }
-    }
-  }
+    },
+  },
 };
 </script>
+
 
 <style scoped>
 .chatbot {
