@@ -551,6 +551,11 @@ fieldset {
     transition: 2s;
 }
 
+.flex.flex-col.mt-5.border.border-gray-300.p-10.rounded-lg.shadow-lg.shadow-gray-500.w-\[550px\]:hover {
+    transform: scale(1.5) rotate3d(1, 1, 1, 344deg);
+    transition: 2s;
+}
+
 legend {
   padding: 0;
 }
