@@ -85,16 +85,13 @@ initWallet({ wallets, autoConnect: true })
 
 </div>
 <br>
-</template>
 
-
-
-
-<template>
-  <div id="app">
-    <Chatbot />
+ <Chatbot />
   </div>
 </template>
+
+
+
 
 <script>
 import Chatbot from './components/Chatbot.vue';
