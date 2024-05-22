@@ -8,6 +8,16 @@ const wallets = [
   new SolflareWalletAdapter(),
 ]
 initWallet({ wallets, autoConnect: true })
+
+$(function() {
+  $('.modal').addClass('animate');
+});
+
+$(".trigger").click(function(){
+    $(".modal").toggleClass("animate");
+});
+
+
 </script>
 
 <template>
@@ -291,15 +301,6 @@ html {
 
 
 
-<script>$(function() {
-  $('.modal').addClass('animate');
-});
-
-$(".trigger").click(function(){
-    $(".modal").toggleClass("animate");
-});
-
-</script>
 
 
 
