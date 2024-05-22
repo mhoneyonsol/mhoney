@@ -48,7 +48,8 @@ initWallet({ wallets, autoConnect: true })
     <div class="flex justify-center items-center lg:w-1/2">
       <CreateTokenForm />
     </div>
-  
+</div>
+
 
 <div class="accordion">
     <h1>Frequently Asked Questions</h1>
@@ -84,9 +85,6 @@ initWallet({ wallets, autoConnect: true })
 
 </div>
 
-
-
-</div>
 </template>
 
 
