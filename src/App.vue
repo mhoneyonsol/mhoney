@@ -139,7 +139,7 @@ initWallet({ wallets, autoConnect: true })
 }
 
 @media only screen and (max-width: 600px) {
-  .tt {
+   tt {
     font-size:3em!important;
   }
 }
