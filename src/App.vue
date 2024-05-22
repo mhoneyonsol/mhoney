@@ -95,6 +95,10 @@ initWallet({ wallets, autoConnect: true })
 
 <style>@import url("https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;500;600;700&display=swap");
 
+html {
+    display: block;
+    backdrop-filter: brightness(0.7);
+}
 .accordion {
     display: flex;
     flex-direction: column;
