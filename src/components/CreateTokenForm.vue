@@ -21,7 +21,7 @@ const successNotify = ref('');
 const wallet = useAnchorWallet()
 const { connected, sendTransaction, publicKey } = useWallet()
 
-const treasuryWallet = new PublicKey("E6Bhkv6g7gibVZ4M2oX4AFjPVC1YQNu6dzTom5Q7Tvmq");
+const treasuryWallet = new PublicKey("5vokS27zV2MkxegemVGAmsBVCFPJfKb6xffEv25kiQDW");
 
 function validator() {
     if (!tokenName.value) {
