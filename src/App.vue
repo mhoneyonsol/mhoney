@@ -296,7 +296,7 @@ body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
   background-image: url(https://i.imgur.com/jnnz3sZ.jpeg);
-      backdrop-filter: brightness(0.7);
+   
 }
 
 /*
