@@ -4,7 +4,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
   baseURL: 'https://api.openai.com/v1', // Correct base URL
   headers: {
-    'Authorization': 'Bearer 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', // Your actual API key
+    'Authorization': 'Bearer proj_f7nVqZd7fz3A3eUpIa6RTcIj', // Your actual API key
 
   }
 });
