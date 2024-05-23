@@ -21,6 +21,43 @@ initWallet({ wallets, autoConnect: true })
     font-size: 7em;
     margin-bottom: -200px;
 ">$MHONEY APP</h1>
+
+
+
+
+
+<section>
+  <div class="container">
+    <h2 class="title">Currency rate</h2>
+
+    <table class="crypto-rate">
+      <!-- <tr class="crypto-rate__item">
+                    <td class="crypto-rate__item-content">
+                        <img class="crypto-rate__item-img" src="img/bitcoin.svg" alt="bitcoin">
+                        <h3 class="crypto-rate__item-title">Bitcoin (BTC):</h3>
+                    </td>
+                    <td class="crypto-rate__item-course">---</td>
+                </tr> -->
+    </table>
+  </div>
+
+  <!-- * INFO -->
+
+  <div class="info">
+    <ul>
+      <li>I use binance web sockets. Max requests = 17</li>
+      <li>The widget shows 17 popular cryptocur- rencies. You can add the desired curren- cies if you wish.
+      </li>
+      <li>Rating compiled 2021.11.22</li>
+    </ul>
+  </div>
+</section>
+
+
+
+
+
+
   <div class="flex lg:px-36 lg:flex-row flex-col justify-center items-center h-screen relative">
     <div class="flex flex-col lg:w-1/2 justify-center items-center w-full">
       <!--ring div starts here-->
@@ -169,6 +206,78 @@ html {
     transition: 2s;
 }
 
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.container {
+  max-width: 1312px;
+  margin: 64px auto 0;
+}
+
+.title {
+  color: #f9f9f9;
+  text-align: center;
+  font-weight: bold;
+  font-size: 32px;
+}
+
+.crypto-rate {
+  margin: 40px auto 0;
+  width: 400px;
+  min-height: 360px;
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 32px;
+}
+.crypto-rate__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.crypto-rate__item:not(:first-child) {
+  margin-top: 24px;
+}
+.crypto-rate__item-content {
+  display: flex;
+}
+.crypto-rate__item-img {
+  width: 28px;
+}
+.crypto-rate__item-title,
+.crypto-rate__item-course {
+  font-size: 20px;
+  line-height: 1.3;
+}
+.crypto-rate__item-title {
+  margin-left: 12px;
+  font-weight: 600;
+}
+.crypto-rate__item-course {
+  font-weight: 700;
+}
+.crypto-rate__item-course._top {
+  color: #0e833b;
+}
+.crypto-rate__item-course._bottom {
+  color: #912a10;
+}
+
+.info {
+  margin: 64px auto 40px;
+  width: 400px;
+  background-color: #f9f9f9;
+  padding: 16px 48px;
+  border-radius: 16px;
+}
 
 
 .accordion-item {
@@ -1514,3 +1623,115 @@ video {
     height: 28px;
 }
 </style>
+
+<script>const currenciesInfo = [
+  {
+    titleName: "Bitcoin (BTC):",
+    ws: "wss://stream.binance.com:9443/ws/btcusdt@trade",
+    // imgPath: 'img/bitcoin.svg',
+    imgAlt: "bitcoin"
+  },
+  {
+    titleName: "Ethereum (ETH):",
+    ws: "wss://stream.binance.com:9443/ws/ethusdt@trade",
+    // imgPath: 'img/ethereum.svg',
+    imgAlt: "ethereum"
+  },
+  {
+    titleName: "Binance Coin (BNB):",
+    ws: "wss://stream.binance.com:9443/ws/bnbusdt@trade",
+    // imgPath: 'img/binance-coin.svg',
+    imgAlt: "binance-coin"
+  },
+  {
+    titleName: "Solana (SOL)",
+    ws: "wss://stream.binance.com:9443/ws/solusdt@trade",
+    // imgPath: 'img/solana.svg',
+    imgAlt: "solana"
+  },
+  {
+    titleName: "Polkadot (DOT)",
+    ws: "wss://stream.binance.com:9443/ws/dotusdt@trade",
+    // imgPath: 'img/polkadot.svg',
+    imgAlt: "polkadot"
+  },
+];
+
+const STATE_LIST = {
+  top: "_top",
+  bottom: "_bottom"
+};
+
+const cryptoRateTable = document.querySelector(".crypto-rate");
+
+// <img class="crypto-rate__item-img" src="${imgPath}" alt="${imgAlt}">
+function genTableFragment({ imgPath, imgAlt, titleName }) {
+  return `<td class="crypto-rate__item-content">
+                <h3 class="crypto-rate__item-title">${titleName}</h3>
+            </td>
+            <td class="crypto-rate__item-course" data-output="${imgAlt}"></td>
+            `;
+}
+
+function comparePrice(
+  price,
+  prevPrice,
+  output,
+  { top = "_top", bottom = "_bottom" }
+) {
+  if (price > prevPrice) {
+    output.classList.add(top);
+    output.classList.remove(bottom);
+  } else if (price < prevPrice) {
+    output.classList.add(bottom);
+    output.classList.remove(top);
+  } else {
+    output.classList.remove(top);
+    output.classList.remove(bottom);
+  }
+}
+
+function getTableRate() {
+  let stockObj, price, prevPrice;
+  let itemClass = "crypto-rate__item";
+
+  for (let i = 0; i < currenciesInfo.length; i++) {
+    // * TABLE GEN
+    let tableItem = document.createElement("tr");
+    tableItem.classList.add(itemClass);
+
+    tableItem.innerHTML = genTableFragment(currenciesInfo[i]);
+    cryptoRateTable.appendChild(tableItem);
+
+    // * GET COURSE FROM WS
+
+    let ws = new WebSocket(currenciesInfo[i].ws);
+    ws.onmessage = (e) => {
+      stockObj = JSON.parse(e.data);
+      price = +stockObj.p;
+
+      if (price > 10) price = parseFloat(stockObj.p).toFixed(2);
+      else price = parseFloat(stockObj.p).toFixed(4);
+
+      let outputList = document.querySelectorAll(".crypto-rate__item-course");
+
+      // * LIVE RELOAD
+      for (let outputItem of outputList) {
+        if (
+          outputItem.getAttribute("data-output") == currenciesInfo[i].imgAlt
+        ) {
+          outputItem.textContent = price + "$";
+
+          comparePrice(price, prevPrice, outputItem, STATE_LIST);
+          prevPrice = price;
+        }
+      }
+    };
+    ws.onerror = (e) => {
+      console.error(e);
+    };
+  }
+}
+
+getTableRate();
+</script>
