@@ -1,29 +1,6 @@
-# Solana create spl token
+Our service allows you to harness the power of Solana's SPL (Solana Program Library) to create secure and efficient tokens. For just $12, you gain access to:
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Live Demo
-See [Solana create spl token](https://solana-create-spl-token.vercel.app/).
-
-### Preview
-![alt text](https://github.com/BlockchainDev22/solana-create-spl-token/blob/main/intro.png?raw=true)
-
-
+Advanced Security: Solana's robust blockchain technology ensures top-tier security for your tokens.
+High Performance: Benefit from Solana’s high-speed transactions and low fees, optimizing your token's functionality.
+Affordability: At only $12, it’s a cost-effective solution for token creation.
+Utilize Solana’s technology to enhance your digital assets securely and efficiently.
