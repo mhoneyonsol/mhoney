@@ -1,3 +1,5 @@
+<h1>SPL Token Factory</h1><br>
+
 Our service allows you to harness the power of Solana's SPL (Solana Program Library) to create secure and efficient tokens. For just $12, you gain access to:
 
 Advanced Security: Solana's robust blockchain technology ensures top-tier security for your tokens.<br>
